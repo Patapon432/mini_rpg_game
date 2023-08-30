@@ -1,0 +1,16 @@
+[
+    {
+        "name"          :       "Dungeon",
+        "description"   :       "description of Dungeon"
+
+    },
+    {
+        "name"          :       "Dead forrest",
+        "description"   :       "description of Dead Forrest"
+
+    },
+    {
+        "name"          :       "Cursed village",
+        "description"   :       "description of Cursed Village"
+    }
+]

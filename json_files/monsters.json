@@ -1,0 +1,29 @@
+[
+    {
+        "name":          "Zombie",
+        "lvl" :          1,
+        "hp"  :          100,
+        "damage" :       15,
+        "res" :          "Furi",
+        "class_name" :   "Warrior",
+        "max_hp"     :   100
+    },
+    {
+        "name":          "Lich",
+        "lvl" :          4,
+        "hp"  :          100,
+        "damage" :       5,
+        "res" :          "Mana",
+        "class_name" :   "Mage",
+        "max_hp"     :   100
+    },
+    {
+        "name":          "Ogre",
+        "lvl" :          3,
+        "hp"  :          250,
+        "damage" :       150,
+        "res" :          "Furi",
+        "class_name" :   "Warrior",
+        "max_hp"     :   250
+    }
+]
