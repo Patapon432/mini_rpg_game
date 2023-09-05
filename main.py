@@ -29,15 +29,15 @@ class Player:
 
 
     def xp_up(self):
-        p1._pl_xp += 70    
-        if p1._pl_xp >= 100:
-            p1.pl_lvlup()
-            p1._pl_xp = 0
-        print(f'Поздравляем, вы получили 25 опыта\nДо следующего уровня {100 - p1._pl_xp} Опыта!')
+        self._pl_xp += 70    
+        if self._pl_xp >= 100:
+            self.pl_lvlup()
+            self._pl_xp = 0
+        print(f'Поздравляем, вы получили 25 опыта\nДо следующего уровня {100 - self._pl_xp} Опыта!')
 
     def status(self):
-        print(f'\nВаше имя - {p1._pl_name}\nВаш класс - {p1._pl_class_name}\nКоличество вашего здоровья - {p1._pl_maxhp}|{p1._pl_hp}\nКоличество вашего ресурса - {p1._pl_maxres}|{p1._pl_res}\nВаш уровень - {p1._pl_lvl}\n'
-              f'Количество вашего опыта - {p1._pl_xp}\nКоличество опыта до следующего уровня - {100 - p1._pl_xp} ')
+        print(f'\nВаше имя - {self._pl_name}\nВаш класс - {self._pl_class_name}\nКоличество вашего здоровья - {self._pl_maxhp}|{self._pl_hp}\nКоличество вашего ресурса - {self._pl_maxres}|{self._pl_res}\nВаш уровень - {self._pl_lvl}\n'
+              f'Количество вашего опыта - {self._pl_xp}\nКоличество опыта до следующего уровня - {100 - self._pl_xp} ')
         
     def win_instance(self):
         print(f'Вы победили {m1._m_name}')
@@ -54,18 +54,18 @@ class Player:
                 continue
 
     def fight_hp_status(self):
-        print(f'-------------------------------\nЗдоровье врага - {m1._m_hp}\nКласс врага - {m1._m_class}\nКоличество вашего здоровья - {p1._pl_maxhp}|{p1._pl_hp}\nКоличество вашего ресурса - {p1._pl_res}')
+        print(f'-------------------------------\nЗдоровье врага - {m1._m_hp}\nКласс врага - {m1._m_class}\nКоличество вашего здоровья - {self._pl_maxhp}|{self._pl_hp}\nКоличество вашего ресурса - {self._pl_res}')
 
     def pl_punch(self):
         if random.randint(0, 100) > 15:
             if random.randint(0, 100) >= 50:
                 print('\nВы замечаете слабое место врага и наносите критический удар!\n')
-                print(f'Вы наносите {p1._pl_damage * 2} урона!\n')
-                m1._m_hp -= (p1._pl_damage * 2)
+                print(f'Вы наносите {self._pl_damage * 2} урона!\n')
+                m1._m_hp -= (self._pl_damage * 2)
             else:
                 print('\nВы выпускаете стрелу, ')
-                print(f'Вы наносите {p1._pl_damage} урона!\n')
-                m1._m_hp -= p1._pl_damage
+                print(f'Вы наносите {self._pl_damage} урона!\n')
+                m1._m_hp -= self._pl_damage
         else:
             print('\nВы промахнулись\n')
             pass
@@ -82,27 +82,27 @@ class Player:
         print('\nВы ничего не делаете')
         pass    
 
-    def pl_magic(self):
-        p1._pl_res -= 25
+    def pl_cast_spell(self):
+        self._pl_res -= 25
         print('\nБлагодаря своему непревзойденному опыту вы делаете меткий выстрел в голову. Враг повержен!\n')
         m1._m_hp = 0
 
     def pl_lvlup(self):
-        p1._pl_lvl = p1._pl_lvl + 1
-        print(f'\nПоздравляем, вы подняли свой уровень! Ваш уровень - {p1._pl_lvl}')
-        p1._pl_maxhp += 50
-        p1._pl_hp = p1._pl_maxhp
-        p1._pl_maxres +=50
-        p1._pl_res = p1._pl_maxres
-        p1.fight_hp_status()
+        self._pl_lvl = self._pl_lvl + 1
+        print(f'\nПоздравляем, вы подняли свой уровень! Ваш уровень - {self._pl_lvl}')
+        self._pl_maxhp += 50
+        self._pl_hp = self._pl_maxhp
+        self._pl_maxres +=50
+        self._pl_res = self._pl_maxres
+        self.fight_hp_status()
 
-    def checkmaxhp(self):
-        if p1._pl_hp > p1._pl_maxhp:
-            p1._pl_hp = p1._pl_maxhp
+    def check_max_hp(self):
+        if self._pl_hp > self._pl_maxhp:
+            self._pl_hp = self._pl_maxhp
 
-    def checkmaxres(self):
-        if p1._pl_res > p1._pl_maxhp:
-            p1._pl_res = p1._pl_maxhp
+    def check_max_res(self):
+        if self._pl_res > self._pl_maxhp:
+            self._pl_res = self._pl_maxhp
             
 
     
@@ -111,11 +111,11 @@ class Warrior(Player):
     def pl_punch(self):
         if random.randint(0, 100) > 15:
             if random.randint(0, 100) >= 15:
-                print(f'\nВы бьете мечом!\nКритический удар!\n{m1._m_name} получает {p1._pl_damage * 2} урона!\n')
-                m1._m_hp -= (p1._pl_damage * 2)
+                print(f'\nВы бьете мечом!\nКритический удар!\n{m1._m_name} получает {self._pl_damage * 2} урона!\n')
+                m1._m_hp -= (self._pl_damage * 2)
             else:
-                print(f'\nВы бьете мечом \n{m1._m_name} получает {p1._pl_damage} урона!\n')
-                m1._m_hp -= p1._pl_damage
+                print(f'\nВы бьете мечом \n{m1._m_name} получает {self._pl_damage} урона!\n')
+                m1._m_hp -= self._pl_damage
         else:
             print('\nВы промахнулись\n')
             pass
@@ -123,11 +123,11 @@ class Warrior(Player):
 
     def pl_protect(self):
         print(f'\nВы готовы к атаке противника и будете защищаться\n{m1._m_name} нанес {(m1._m_damage / 3)} урона!\n')
-        p1._pl_hp -= (m1._m_damage / 3)
+        self._pl_hp -= (m1._m_damage / 3)
 
 
-    def pl_magic(self):
-        p1._pl_res -= 25
+    def pl_cast_spell(self):
+        self._pl_res -= 25
         print(f'\nСвоей яростью вы заставляете {m1._m_name} пропустить ход!\n')
 
 class Mage(Player):
@@ -135,11 +135,11 @@ class Mage(Player):
     def pl_punch(self):
         if random.randint(0, 100) > 15:
             if random.randint(0, 100) >= 15:
-                print(f'\nВы бьете посохом!\nКритический удар!\n{m1._m_name} получает {p1._pl_damage * 2} урона!\n')
-                m1._m_hp -= (p1._pl_damage * 2)
+                print(f'\nВы бьете посохом!\nКритический удар!\n{m1._m_name} получает {self._pl_damage * 2} урона!\n')
+                m1._m_hp -= (self._pl_damage * 2)
             else:
-                print(f'\nВы бьете посохом! \n{m1._m_name} получает {p1._pl_damage} урона!\n')
-                m1._m_hp -= p1._pl_damage
+                print(f'\nВы бьете посохом! \n{m1._m_name} получает {self._pl_damage} урона!\n')
+                m1._m_hp -= self._pl_damage
         else:
             print('\nВы промахнулись\n')
             pass
@@ -147,16 +147,16 @@ class Mage(Player):
 
     def pl_protect(self):
         print(f'\nВы готовы к атаке противника и будете защищаться\n{m1._m_name} нанес {(m1._m_damage / 3)} урона!\n')
-        p1._pl_hp -= m1._m_damage - (m1._m_damage * 0.25)
+        self._pl_hp -= m1._m_damage - (m1._m_damage * 0.25)
         
-    def pl_magic(self):
-        p1._pl_res -= 25
-        print(f'\nВы кастуете огненный шар! - {p1._pl_damage * 2.5} \n')
-        m1._m_hp -= p1._pl_damage * 2.5
+    def pl_cast_spell(self):
+        self._pl_res -= 25
+        print(f'\nВы кастуете огненный шар! - {self._pl_damage * 2.5} \n')
+        m1._m_hp -= self._pl_damage * 2.5
         if m1._m_hp <= 0:
-            p1.win_instance()
+            self.win_instance()
             m1.m_drop()
-            p1.xp_up()
+            self.xp_up()
             waiting()
 
 class Archer(Player):
@@ -165,12 +165,12 @@ class Archer(Player):
         if random.randint(0, 100) > 15:
             if random.randint(0, 100) >= 50:
                 print('\nВы замечаете слабое место врага и наносите критический удар!\n')
-                print(f'Вы наносите {p1._pl_damage * 2} урона!\n')
-                m1._m_hp -= (p1._pl_damage * 2)
+                print(f'Вы наносите {self._pl_damage * 2} урона!\n')
+                m1._m_hp -= (self._pl_damage * 2)
             else:
                 print('\nВы выпускаете стрелу, ')
-                print(f'Вы наносите {p1._pl_damage} урона!\n')
-                m1._m_hp -= p1._pl_damage
+                print(f'Вы наносите {self._pl_damage} урона!\n')
+                m1._m_hp -= self._pl_damage
         else:
             print('\nВы промахнулись\n')
             pass
@@ -185,13 +185,13 @@ class Archer(Player):
             print('Вы успешно уклонились от удара\n')
 
 
-    def pl_magic(self):
-        p1._pl_res -= 25
+    def pl_cast_spell(self):
+        self._pl_res -= 25
         print('\nБлагодаря своему непревзойденному опыту вы делаете меткий выстрел в голову. Враг повержен!\n')
         m1._m_hp = 0
-        p1.win_instance()
+        self.win_instance()
         m1.m_drop()
-        p1.xp_up
+        self.xp_up
         waiting()
 
 
@@ -208,7 +208,7 @@ class Monster:
         if random.randint(0, 100) >= 60:
             m1.m_punch()
         else:
-            m1.m_magic()
+            m1.m_cast_spell()
     
     def __del__(self):
         pass
@@ -219,7 +219,7 @@ class Monster:
             inventory.healing_potion.amount += 0
             inventory.resource_potion.amount += 0
 
-    def m_magic(self):
+    def m_cast_spell(self):
         print('\nЗомби наполнился яростью и наносит несколько быстрых ударов!\n')
         m1.m_punch()
         m1.m_punch()
@@ -258,7 +258,7 @@ class Zombie(Monster):
         if random.randint(0, 100) >= 25:
             m1.m_punch()
         else:
-            m1.m_magic()
+            m1.m_cast_spell()
 
 
         
@@ -275,9 +275,9 @@ class Lich(Monster):
             if random.randint(0, 100) >= 60:
                 m1.m_punch()
             else:
-                m1.m_magic()
+                m1.m_cast_spell()
 
-    def m_magic(self):
+    def m_cast_spell(self):
         print(f'\n{m1._m_name} выпускает в вас ледяную стрелу!\n')
         print(f'Вы получаете {m1._m_damage * 5} урона!\n')
         p1._pl_hp -= (m1._m_damage * 5)
@@ -307,7 +307,7 @@ class Ogre(Monster):
             inventory.healing_potion.amount += 3
             inventory.resource_potion.amount += 3
 
-    def m_magic(self):
+    def m_cast_spell(self):
         print(f'\n{m1._m_name} ломает вам череп!\n')
         p1.game_over()
 
@@ -334,7 +334,7 @@ class Ogre(Monster):
         if random.randint(0, 100) >= 25:
             m1.m_punch()
         else:
-            m1.m_magic()
+            m1.m_cast_spell()
 
 
 
@@ -344,9 +344,7 @@ m1 = Monster(None, None, None, None, None)  # Создание экземпля�
 
 
 
-def waiting():  # Функция ожидания из которой можно что либо сделать персонажу   
-    print('\n-------------------------\n1. Просмотр статуса.\n2. Открыть инвентарь\n3. Пойти в подземелье')
-    return
+
 
 
 def choose_class():   # Функция выбора класса
@@ -403,8 +401,8 @@ def choose_class():   # Функция выбора класса
             waiting()
 
         else:
-            print('Вы ввели не те символы')
-            continue
+            print('\nВы ввели не те символы')
+         
     
 
 def fight():
@@ -432,11 +430,11 @@ def fight():
                 m1.m_attack()
             elif user_choice == '2':
                 if p1._pl_res >= 25:
-                    p1.pl_magic()
+                    p1.pl_cast_spell()
                     m1.m_attack()
                 else:
                     print('\nВам не хватает ресурса для использования данной способности\n')
-                    continue
+                    
 
             elif user_choice == '3':
                 p1.pl_protect()
@@ -446,7 +444,7 @@ def fight():
                 m1.m_attack()
             else:
                 print('\nВы нажали не ту кнопку!\n')
-                continue
+
     
 
 
@@ -486,7 +484,6 @@ def dungeon():
 
         else:
             print('\nВы нажали не ту кнопку\n')
-            continue
 
 
 def dead_forrest():
@@ -524,7 +521,6 @@ def dead_forrest():
            
         else:
             print('Введен не тот символ')
-            continue
 
 
 def curced_village():
@@ -568,7 +564,7 @@ def curced_village():
 
 def waiting():
     user_input = input('\n-------------------------\n1. Открыть инвентарь \n2. Просмотр статуса \n3. Отправиться в путешествие\nВведите ваш выбор: ')
-    print()
+    
     while True:
         if user_input == '1':
             while True:   
@@ -578,7 +574,7 @@ def waiting():
                 if user_input == '1':
                         if p1._pl_hp < p1._pl_maxhp:  
                             p1._pl_hp += 50
-                            p1.checkmaxhp()
+                            p1.check_max_hp()
                             inventory.healing_potion.amount -= 1
                             p1.status()
                             
@@ -589,7 +585,7 @@ def waiting():
                 elif user_input == '2':
                     if p1._pl_res < p1._pl_maxres:
                         p1._pl_res += 50     
-                        p1.checkmaxres()
+                        p1.check_max_res()
                         inventory.resource_potion.amount -= 1
                         p1.status()
 
@@ -612,12 +608,12 @@ def waiting():
             travel()
 
         else:
-            print('\nВы нажали не ту кнопку!\n')
+            print('\nВы нажали не ту кнопку!')
             waiting()
 
 def travel():
     while True:
-        user_input = input(f'-------------------------\nВведите куда вы хотите отправиться\n1. {locations[0]["name"]}\n2. {locations[1]["name"]}\n3. {locations[2]["name"]}\nВведите ваш выбор: ')
+        user_input = input(f'\n-------------------------\nВведите куда вы хотите отправиться\n1. {locations[0]["name"]}\n2. {locations[1]["name"]}\n3. {locations[2]["name"]}\nВведите ваш выбор: ')
         if user_input == '1':
             dungeon()
         elif user_input == '2':
