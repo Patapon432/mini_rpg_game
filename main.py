@@ -528,7 +528,6 @@ def curced_village():
     print('От этой деревни отказалась империя, после того, как ее проклял лич.\nЕсть сомнение, бывал бы кто-нибудь здесь в последнее время...\nВы можете пройти внутрь деревни или обыскать здания.')
     
     while True:
-        m1.__class__ = Ogre
         m1._m_name = m_classes[2]["name"]
         m1._m_hp = m_classes[2]["hp"]
         m1._m_damage = m_classes[2]["damage"]
@@ -559,7 +558,7 @@ def curced_village():
             
         else:
             print('\nВведен не тот символ\n')
-            continue
+            
 
 
 def waiting():

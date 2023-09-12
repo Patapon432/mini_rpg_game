@@ -18,12 +18,17 @@ def open_inventory():
         
 
 
-# class bag:
-#     items = []
+class Item:
+     def __init__(self, name, value):
+          self.name = name
+          self.value = value
 
-#     def __init__(self, item: Item = None):
-#         if item:
-#             self.items.append(item)
+class bag:
+    items = []
+
+    def __init__(self, item: Item = None):
+        if item:
+            self.items.append(item)
 
 #     def add_item(self, item: Item)
          
