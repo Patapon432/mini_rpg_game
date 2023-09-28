@@ -2,7 +2,9 @@ import json
 
 import random
 
-import inventory 
+# import inventory 
+
+import Classes
 
 
 location_file = open('json_files\locations.json', 'r')
@@ -213,11 +215,11 @@ class Monster:
     def __del__(self):
         pass
 
-    def m_drop(self):
-        if random.randint(0, 100) >= 50:
-            print(f'Вы подобрали 1 {inventory.healing_potion.name} и 1 {inventory.resource_potion.name}')
-            inventory.healing_potion.amount += 0
-            inventory.resource_potion.amount += 0
+    # def m_drop(self):
+        # if random.randint(0, 100) >= 50:
+        #     print(f'Вы подобрали 1 {inventory.healing_potion.name} и 1 {inventory.resource_potion.name}')
+        #     inventory.healing_potion.amount += 0
+        #     inventory.resource_potion.amount += 0
 
     def m_cast_spell(self):
         print('\nЗомби наполнился яростью и наносит несколько быстрых ударов!\n')
@@ -249,10 +251,10 @@ class Monster:
 
 class Zombie(Monster):
     
-    def m_drop(self):
-            print(f'Вы подобрали 1 {inventory.healing_potion.name} и 1 {inventory.resource_potion.name}')
-            inventory.healing_potion.amount += 1
-            inventory.resource_potion.amount += 1
+    # def m_drop(self):
+    #         print(f'Вы подобрали 1 {inventory.healing_potion.name} и 1 {inventory.resource_potion.name}')
+    #         inventory.healing_potion.amount += 1
+    #         inventory.resource_potion.amount += 1
         
     def m_attack(self):
         if random.randint(0, 100) >= 25:
@@ -265,11 +267,11 @@ class Zombie(Monster):
 
 class Lich(Monster):
 
-    def m_drop(self):
-        if random.randint(0, 100) >= 50:
-            print(f'Вы подобрали 1 {inventory.healing_potion.name} и 1 {inventory.resource_potion.name}')
-            inventory.healing_potion.amount += 2
-            inventory.resource_potion.amount += 2
+    # def m_drop(self):
+    #     if random.randint(0, 100) >= 50:
+    #         print(f'Вы подобрали 1 {inventory.healing_potion.name} и 1 {inventory.resource_potion.name}')
+    #         inventory.healing_potion.amount += 2
+    #         inventory.resource_potion.amount += 2
 
     def m_attack(self):
             if random.randint(0, 100) >= 60:
@@ -301,11 +303,11 @@ class Lich(Monster):
 
 class Ogre(Monster):
 
-    def m_drop(self):
-        if random.randint(0, 100) >= 50:
-            print(f'Вы подобрали 1 {inventory.healing_potion.name} и 1 {inventory.resource_potion.name}')
-            inventory.healing_potion.amount += 3
-            inventory.resource_potion.amount += 3
+    # def m_drop(self):
+    #     if random.randint(0, 100) >= 50:
+    #         print(f'Вы подобрали 1 {inventory.healing_potion.name} и 1 {inventory.resource_potion.name}')
+    #         inventory.healing_potion.amount += 3
+    #         inventory.resource_potion.amount += 3
 
     def m_cast_spell(self):
         print(f'\n{m1._m_name} ломает вам череп!\n')
@@ -364,8 +366,8 @@ def choose_class():   # Функция выбора класса
             p1._pl_maxhp = pl_classes[0]["hp"]
             p1._pl_maxres = pl_classes[0]["how_many_res"]
             p1._pl_xp = pl_classes[0]["xp"]
-            inventory.healing_potion.amount = 1
-            inventory.resource_potion.amount = 0
+            # inventory.healing_potion.amount = 1
+            # inventory.resource_potion.amount = 0
             p1.status()
             waiting()
 
@@ -380,8 +382,8 @@ def choose_class():   # Функция выбора класса
             p1._pl_maxres = pl_classes[1]["hp"]
             p1._pl_maxres = pl_classes[1]["how_many_res"]
             p1._pl_xp = pl_classes[1]["xp"]
-            inventory.healing_potion.amount = 1
-            inventory.resource_potion.amount = 1         
+            # inventory.healing_potion.amount = 1
+            # inventory.resource_potion.amount = 1         
             p1.status()
             waiting()
 
@@ -395,8 +397,8 @@ def choose_class():   # Функция выбора класса
             p1._pl_maxhp = pl_classes[2]["hp"]
             p1._pl_maxres = pl_classes[2]["how_many_res"]
             p1._pl_xp = pl_classes[2]["xp"]
-            inventory.healing_potion.amount = 1
-            inventory.resource_potion.amount = 0
+            # inventory.healing_potion.amount = 1
+            # inventory.resource_potion.amount = 0
             p1.status()
             waiting()
 
@@ -468,15 +470,15 @@ def dungeon():
             m1.m_first_strike()
             fight()
             
-        elif user_input == '2':
-                # С шансом 20% можно найти сундук в котором будет зелье здоровья и зелье восстановления ресурса
-            if random.randint(0, 100) >= 80:
-                print(f'\nВы нашли сундук с сокровищами!\n В нем было 1 - {inventory.healing_potion.name}, и 1 - {inventory.resource_potion.name}')
-                inventory.healing_potion.amount += 1
-                inventory.resource_potion.amount += 1
-                inventory.open_inventory
-            else:
-                print('\nК сожалению тут ничего нет, попробуйте другое место.')
+        # elif user_input == '2':
+        #         # С шансом 20% можно найти сундук в котором будет зелье здоровья и зелье восстановления ресурса
+        #     if random.randint(0, 100) >= 80:
+        #         print(f'\nВы нашли сундук с сокровищами!\n В нем было 1 - {inventory.healing_potion.name}, и 1 - {inventory.resource_potion.name}')
+        #         inventory.healing_potion.amount += 1
+        #         inventory.resource_potion.amount += 1
+        #         inventory.open_inventory
+            # else:
+            #     print('\nК сожалению тут ничего нет, попробуйте другое место.')
                 
         elif user_input == '3':
             print('\nВы решили вернуться обратно ')    
@@ -504,16 +506,16 @@ def dead_forrest():
             m1.m_first_strike()
             fight()
 
-        elif user_input == '2':
-                # С шансом 20% можно найти сундук в котором будет зелье здоровья и зелье восстановления ресурса
-            if random.randint(0, 100) >= 80:
-                print(f'\nВы нашли сундук с сокровищами!\n В нем было 1 - {inventory.healing_potion.name}, и 1 - {inventory.resource_potion.name}\n')
-                inventory.healing_potion.amount += 1
-                inventory.resource_potion.amount += 1
-                inventory.open_inventory
+        # elif user_input == '2':
+        #         # С шансом 20% можно найти сундук в котором будет зелье здоровья и зелье восстановления ресурса
+        #     if random.randint(0, 100) >= 80:
+        #         print(f'\nВы нашли сундук с сокровищами!\n В нем было 1 - {inventory.healing_potion.name}, и 1 - {inventory.resource_potion.name}\n')
+        #         inventory.healing_potion.amount += 1
+        #         inventory.resource_potion.amount += 1
+        #         inventory.open_inventory
                 
-            else:
-                print('\nК сожалению тут ничего нет, попробуйте другое место.\n')
+        #     else:
+        #         print('\nК сожалению тут ничего нет, попробуйте другое место.\n')
             
         elif user_input == '3':
             print('Вы решили вернуться обратно ')
@@ -541,16 +543,16 @@ def curced_village():
             m1.m_first_strike()
             fight()
 
-        elif user_input == '2':
-                # С шансом 20% можно найти сундук в котором будет зелье здоровья и зелье восстановления ресурса
-            if random.randint(0, 100) >= 80:
-                print(f'\nВы нашли сундук с сокровищами!\n В нем было 1 - {inventory.healing_potion.name}, и 1 - {inventory.resource_potion.name}')
-                inventory.healing_potion.amount += 1
-                inventory.resource_potion.amount += 1
-                inventory.open_inventory
+        # elif user_input == '2':
+        #         # С шансом 20% можно найти сундук в котором будет зелье здоровья и зелье восстановления ресурса
+        #     if random.randint(0, 100) >= 80:
+        #         print(f'\nВы нашли сундук с сокровищами!\n В нем было 1 - {inventory.healing_potion.name}, и 1 - {inventory.resource_potion.name}')
+        #         inventory.healing_potion.amount += 1
+        #         inventory.resource_potion.amount += 1
+        #         inventory.open_inventory
                 
-            else:
-                print('\nК сожалению тут ничего нет, попробуйте другое место.\n')
+            # else:
+            #     print('\nК сожалению тут ничего нет, попробуйте другое место.\n')
             
         elif user_input == '3':
             print('\nВы решили вернуться обратно')
@@ -566,38 +568,39 @@ def waiting():
     
     while True:
         if user_input == '1':
-            while True:   
-                inventory.open_inventory()           
-                user_input = input('\n-------------------------\n1. Выпить зелье исцеления.\n2. Выпить зелье восстановления ресурса.\n3. Закрыть рюкзак\nВведите ваш выбор: ')
+            pass
+            # while True:   
+            #     inventory.open_inventory()           
+            #     user_input = input('\n-------------------------\n1. Выпить зелье исцеления.\n2. Выпить зелье восстановления ресурса.\n3. Закрыть рюкзак\nВведите ваш выбор: ')
                 
-                if user_input == '1':
-                        if p1._pl_hp < p1._pl_maxhp:  
-                            p1._pl_hp += 50
-                            p1.check_max_hp()
-                            inventory.healing_potion.amount -= 1
-                            p1.status()
+            #     if user_input == '1':
+            #             if p1._pl_hp < p1._pl_maxhp:  
+            #                 p1._pl_hp += 50
+            #                 p1.check_max_hp()
+            #                 inventory.healing_potion.amount -= 1
+            #                 p1.status()
                             
-                        else:
-                            print(f'\nУ вас максимальное количество здоровья, использовать {inventory.healing_potion.name} нельзя! ')
-                            p1.status()
+            #             else:
+            #                 print(f'\nУ вас максимальное количество здоровья, использовать {inventory.healing_potion.name} нельзя! ')
+            #                 p1.status()
                         
-                elif user_input == '2':
-                    if p1._pl_res < p1._pl_maxres:
-                        p1._pl_res += 50     
-                        p1.check_max_res()
-                        inventory.resource_potion.amount -= 1
-                        p1.status()
+                # elif user_input == '2':
+                #     if p1._pl_res < p1._pl_maxres:
+                #         p1._pl_res += 50     
+                #         p1.check_max_res()
+                #         inventory.resource_potion.amount -= 1
+                #         p1.status()
 
-                    else:
-                        print(f'\nУ вас максимальное количество ресурса, использовать {inventory.resource_potion.name} нельзя! ')
-                        p1.status()
+                #     else:
+                #         print(f'\nУ вас максимальное количество ресурса, использовать {inventory.resource_potion.name} нельзя! ')
+                #         p1.status()
         
-                elif user_input == '3':
-                    waiting()
+                # elif user_input == '3':
+                #     waiting()
 
-                else:
-                    print('\nВы нажали не ту кнопку!\n')
-                    continue
+                # else:
+                #     print('\nВы нажали не ту кнопку!\n')
+                #     continue
 
         elif user_input == '2':
             p1.status()
@@ -614,7 +617,8 @@ def travel():
     while True:
         user_input = input(f'\n-------------------------\nВведите куда вы хотите отправиться\n1. {locations[0]["name"]}\n2. {locations[1]["name"]}\n3. {locations[2]["name"]}\nВведите ваш выбор: ')
         if user_input == '1':
-            dungeon()
+            location = Classes.Location(locations[0]["name"], locations[0]["description"])
+            Classes.Location.dungeon()
         elif user_input == '2':
             dead_forrest()
         elif user_input == '3':
@@ -629,6 +633,6 @@ def start_game():    # Функция начала игры
     choose_class()
 
 
-start_game()
-
+# start_game()
+travel()
 
