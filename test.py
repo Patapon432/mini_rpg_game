@@ -1,24 +1,19 @@
 import json
 import random
 
+location_file = open('json_files\locations.json', 'r')
+locations = json.load(location_file)
+
 monsters_file = open('json_files/monsters.json', 'r')
 m_class = json.load(monsters_file)
 
+pl_class_file = open('json_files\class.json', 'r')
+pl_classes = json.load(pl_class_file)
+
 class Player:
-    # def __init__(self, name: str, hp: int, max_hp: int, mana: int, max_mana: int, damage: int, crit: int, miss_chance: int, xp: int,  lvl: int = None):
-    #     self._name = name
-    #     self._lvl = 0 if not lvl else lvl
-    #     self._hp = hp
-    #     self._max_hp = max_hp
-    #     self._mana = mana
-    #     self._max_mana = max_mana
-    #     self._damage = damage
-    #     self._crit = crit
-    #     self._miss_chance = miss_chance
-    #     self._xp = xp
     def __init__(self):
         self._name = 'Test'
-        self._hp = 100
+        self._hp = None
         self._max_hp = 100
         self._damage = 20
         self._game_class = 'Archer'
@@ -33,7 +28,7 @@ class Player:
         self._hp -= damage
     
     def status(self):
-        print(f'-------------------------------\nВаше имя - {self._name}\nКласс вашего персонажа - {self._game_class}\nКоличество вашего здоровья - {self._max_hp}|{self._hp}\nКоличество вашего ресурса - {self._max_mana}|{self._mana}\nВаш уровень - {self._lvl}\nКоличество вашего опыта - {self._xp}')
+        print(f'-------------------------------\n\nВаше имя - {self._name}\nКласс вашего персонажа - {self._game_class}\nКоличество вашего здоровья - {self._max_hp}|{self._hp}\nКоличество вашего ресурса - {self._max_mana}|{self._mana}\nВаш уровень - {self._lvl}\nКоличество вашего опыта - {self._xp}')
     
     def xp_up(self, xp):
         self._xp += xp
@@ -51,33 +46,37 @@ class Player:
 class Monster:
     def __init__(self, name):
         self._name = name
-        self._hp = 100
-        # if self._name == 'Zombie':
-        #     self._damage = m_class[0]["damage"]
-        #     self._crit = m_class[0]["crit"]
-        #     self._xp = m_class[0]["xp"] 
-        #     self._miss_chance = m_class[0]["miss_chance"]
-        #     self._max_hp = m_class[0]["max_hp"]
-        #     self._hp = m_class[0]["hp"]
-        #     self._lvl = m_class[0]["lvl"]
-            
-        # elif self._name == 'Lich':
-        #     self._damage = m_class[1]["damage"]
-        #     self._crit = m_class[1]["crit"]
-        #     self._xp = m_class[1]["xp"] 
-        #     self._miss_chance = m_class[1]["miss_chance"]
-        #     self._max_hp = m_class[1]["max_hp"]
-        #     self._hp = m_class[1]["hp"]
-        #     self._lvl = m_class[1]["lvl"]
-
-        # elif self._name == 'Ogre':
-        #     self._damage = m_class[2]["damage"]
-        #     self._crit = m_class[2]["crit"]
-        #     self._xp = m_class[2]["xp"] 
-        #     self._miss_chance = m_class[2]["miss_chance"]
-        #     self._max_hp = m_class[2]["max_hp"]
-        #     self._hp = m_class[2]["hp"]
-        #     self._lvl = m_class[2]["lvl"]
+        self._damage = 0
+        self._crit = None
+        self._xp = None
+        self._miss_chance = None
+        self._max_hp = None
+        self._hp = None
+        self._lvl = None
+        if self._name == 'Zombie':
+            self._damage = m_class[0]["damage"]
+            self._crit = m_class[0]["crit"]
+            self._xp = m_class[0]["xp"] 
+            self._miss_chance = m_class[0]["miss_chance"]
+            self._max_hp = m_class[0]["max_hp"]
+            self._hp = m_class[0]["hp"]
+            self._lvl = m_class[0]["lvl"]       
+        elif self._name == 'Lich':
+            self._damage = m_class[1]["damage"]
+            self._crit = m_class[1]["crit"]
+            self._xp = m_class[1]["xp"] 
+            self._miss_chance = m_class[1]["miss_chance"]
+            self._max_hp = m_class[1]["max_hp"]
+            self._hp = m_class[1]["hp"]
+            self._lvl = m_class[1]["lvl"]
+        elif self._name == 'Ogre':
+            self._damage = m_class[2]["damage"]
+            self._crit = m_class[2]["crit"]
+            self._xp = m_class[2]["xp"] 
+            self._miss_chance = m_class[2]["miss_chance"]
+            self._max_hp = m_class[2]["max_hp"]
+            self._hp = m_class[2]["hp"]
+            self._lvl = m_class[2]["lvl"]
 
     def get_hit(self, damage):
         self._hp -= damage
@@ -214,10 +213,52 @@ class Battle:
             print(f'\nВы готовы к атаке противника и будете защищаться\n{self.monster._name} нанес {(self.monster._damage * 0.75)} урона!\n')
             self.player.get_hit(self.monster._damage  * 0.75)
 
+class Location:
+    def __init__(self, name, description):
+        self._name = name
+        self._description = description
+
 class Game:
     def __init__(self):
         print('Выбран игрок\n')
         self.player = Player()
+
+    def choose_class(self):
+        user_choose = input(f'\n1. {pl_classes[0]["name"]} 2.{pl_classes[1]["name"]} 3. {pl_classes[2]["name"]}\n-------------------------\nВведите ваш выбор: ')
+        while True:
+            if user_choose == '1':
+                self.player._game_class = pl_classes[0]["name"]
+                self.player._hp = pl_classes[0]["hp"]
+                self.player._max_hp = pl_classes[0]["max_hp"]
+                self.player._mana = pl_classes[0]["mana"]
+                self.player._max_mana = pl_classes[0]["max_mana"]
+                self.player._crit_chance = pl_classes[0]["crit_chance"]
+                self.player._damage = pl_classes[0]["damage"]
+                self.player._miss_chance = pl_classes[0]["miss_chance"]
+                return
+            elif user_choose == '2':
+                self.player._game_class = pl_classes[1]["name"]
+                self.player._hp = pl_classes[1]["hp"]
+                self.player._max_hp = pl_classes[1]["max_hp"]
+                self.player._mana = pl_classes[1]["mana"]
+                self.player._max_mana = pl_classes[1]["max_mana"]
+                self.player._crit_chance = pl_classes[1]["crit_chance"]
+                self.player._damage = pl_classes[1]["damage"]
+                self.player._miss_chance = pl_classes[1]["miss_chance"]
+                return
+            elif user_choose == '3':
+                self.player._game_class = pl_classes[2]["name"]
+                self.player._hp = pl_classes[2]["hp"]
+                self.player._max_hp = pl_classes[2]["max_hp"]
+                self.player._mana = pl_classes[2]["mana"]
+                self.player._max_mana = pl_classes[2]["max_mana"]
+                self.player._crit_chance = pl_classes[2]["crit_chance"]
+                self.player._damage = pl_classes[2]["damage"]
+                self.player._miss_chance = pl_classes[2]["miss_chance"]
+                return
+            else:
+                print('\nВы ввели не те символы\n')
+            self.waiting()
 
     def _fight(self, monster: Monster):
         print(f'27 Ваше хп сейчас {self.player._hp}')
@@ -225,10 +266,29 @@ class Game:
         battle.fight()
                
     def start_game(self):
-        print('Вы начали игру\nСейчас будет драка с монстром\n')
-        new_monster = Monster('Zombie')
-        self._fight(new_monster)
-        print('Вы подрались с монстром')
+        self.player._name = input('Вы начали игру\nПожалуйста введите имя персонажа: ')
+        self.choose_class()
+        self.player.status()
+        self.waiting()
+
+    def travel(self):
+        while True:
+            user_input = input(f'\n-------------------------\nВведите куда вы хотите отправиться\n1. {locations[0]["name"]}\n2. {locations[1]["name"]}\n3. {locations[2]["name"]}\nВведите ваш выбор: ')
+            if user_input == '1':
+                location = Location(locations[0]["name"], locations[0]["description"])
+                self.dungeon(location) 
+            else:
+                print('\nВы нажали не ту кнопку!')  
+                
+
+    def dungeon(self, location: Location):
+        print(f'{location._name}\n{location._description}')
+        new_monster= Monster('Lich')
+        user_input = input('\n-------------------------\n1. Идти по подземелью.\n2. Обыскать подземелье.\n3. Вернуться обратно.\nВаш вариант выбора: ')
+        if user_input == '1':
+            print(f'На своем пути вы встречаете врага! это {new_monster._name}')
+            self._fight(new_monster)
+        
 
     def waiting(self):
         user_input = input('\n-------------------------\n1. Открыть инвентарь \n2. Просмотр статуса \n3. Отправиться в путешествие\nВведите ваш выбор: ')
@@ -267,11 +327,11 @@ class Game:
                 #     else:
                 #         print('\nВы нажали не ту кнопку!\n')
             elif user_input == '2':
-                # player.status()
+                self.player.status()
                 self.waiting()
             elif user_input == '3':
-                # travel_test.travel()
-                battle = Battle
+                self.travel()
+                
             else:
                 print('\nВы нажали не ту кнопку!')
                 self.waiting()    
