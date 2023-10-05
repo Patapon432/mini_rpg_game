@@ -5,7 +5,7 @@ location_file = open('json_files\locations.json', 'r')
 locations = json.load(location_file)
 
 monsters_file = open('json_files/monsters.json', 'r')
-m_class = json.load(monsters_file)
+monster = json.load(monsters_file)
 
 pl_class_file = open('json_files\class.json', 'r')
 pl_classes = json.load(pl_class_file)
@@ -44,15 +44,15 @@ class Player:
             
         self.status()
 class Monster:
-    def __init__(self, name):
-        self._name = name
-        self._damage = 0
-        self._crit = None
-        self._xp = None
-        self._miss_chance = None
-        self._max_hp = None
-        self._hp = None
-        self._lvl = None
+    def __init__(self, name: str):
+        self._name = monster[name]
+        self._damage = monster[name]["damage"]
+        self._crit = monster[name]["crit"]
+        self._exp = monster[name]["xp"]
+        self._miss_chance = monster[name]["miss_chance"]
+        self._max_hp = monster[name]["max_hp"]
+        self._hp = monster[name]["hp"]
+        self._lvl = monster[name]["lvl"]
         if self._name == 'Zombie':
             self._damage = m_class[0]["damage"]
             self._crit = m_class[0]["crit"]
@@ -93,16 +93,7 @@ class Battle:
         print(f'-------------------------------\nИмя врага - {self.monster._name}\nЗдоровье врага - {self.monster._max_hp}|{self.monster._hp}\nКоличество вашего здоровья - {self.player._max_hp}|{self.player._hp}\nКоличество вашего ресурса - {self.player._max_mana}|{self.player._mana}')
 
     def fight(self):
-        while True: 
-            if self.player._hp <= 0:
-                print('Игра окончена')
-                break
-            elif self.monster._hp <= 0:
-                print('Вы победили монстра!')
-                self.player.xp_up(self.monster._xp)
-                print(self.player._xp)
-                break
-            else:
+        while self.player._hp > 0 and self.monster._hp > 0:
                 self.fight_status()       
                 user_choice = input('\nВыберите одно действие:\n----------------------\n1. Обычный удар. 2. Способность персонажа. 3. Защититься. 4. Пропуск хода. \nВведите ваш выбор: ')
                 if user_choice == '1':
@@ -117,7 +108,12 @@ class Battle:
                     self.enemy_full_attack()
                 else:
                     print('\nВы нажали не ту кнопку!\n')    
-            
+        else:
+            if self.player._hp > 0:
+                print('Вы победили')
+                exit()
+        print('Вы проиграли')
+        exit()
     def player_attack(self):
             if self.player._game_class == 'Archer':
                 print('\nВы выпускаете стрелу')

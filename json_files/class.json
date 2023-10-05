@@ -1,5 +1,5 @@
-[
-    {
+[   
+     {
         "name"         :       "Warrior",
         "lvl"          :       1,
         "hp"           :       100,
@@ -13,7 +13,6 @@
         "how_many_res" :       75,
         "xp"           :       0,
         "miss_chance"   :      15
-
     },
     {
         "name"         :       "Mage",
@@ -43,4 +42,5 @@
         "xp"           :       0,
         "miss_chance"   :      20
     }
+
 ]
