@@ -11,18 +11,20 @@ pl_class_file = open('json_files\class.json', 'r')
 pl_classes = json.load(pl_class_file)
 
 class Player:
-    def __init__(self):
-        self._name = 'Test'
-        self._hp = None
-        self._max_hp = 100
-        self._damage = 20
-        self._game_class = 'Archer'
-        self._miss_chance = 15
-        self._crit_chance = 15
-        self._mana = 100
-        self._max_mana = 100
-        self._xp = 0
-        self._lvl = 1
+    def __init__(self, player_name = None, name = None):
+
+        self._name = player_name
+        if name:
+            self._hp = pl_classes[name]['hp']
+            self._max_hp = pl_classes[name]['max_hp']
+            self._damage = pl_classes[name]['damage']
+            self._game_class = name
+            self._miss_chance = pl_classes[name]['miss_chance']
+            self._crit_chance = pl_classes[name]['crit_chance']
+            self._mana = pl_classes[name]['mana']
+            self._max_mana = pl_classes[name]['max_mana']
+            self._xp = pl_classes[name]['xp']
+            self._lvl = pl_classes[name]['lvl']
 
     def get_hit(self, damage):
         self._hp -= damage
@@ -45,7 +47,7 @@ class Player:
         self.status()
 class Monster:
     def __init__(self, name: str):
-        self._name = monster[name]
+        self._name = name
         self._damage = monster[name]["damage"]
         self._crit = monster[name]["crit"]
         self._exp = monster[name]["xp"]
@@ -53,36 +55,9 @@ class Monster:
         self._max_hp = monster[name]["max_hp"]
         self._hp = monster[name]["hp"]
         self._lvl = monster[name]["lvl"]
-        if self._name == 'Zombie':
-            self._damage = m_class[0]["damage"]
-            self._crit = m_class[0]["crit"]
-            self._xp = m_class[0]["xp"] 
-            self._miss_chance = m_class[0]["miss_chance"]
-            self._max_hp = m_class[0]["max_hp"]
-            self._hp = m_class[0]["hp"]
-            self._lvl = m_class[0]["lvl"]       
-        elif self._name == 'Lich':
-            self._damage = m_class[1]["damage"]
-            self._crit = m_class[1]["crit"]
-            self._xp = m_class[1]["xp"] 
-            self._miss_chance = m_class[1]["miss_chance"]
-            self._max_hp = m_class[1]["max_hp"]
-            self._hp = m_class[1]["hp"]
-            self._lvl = m_class[1]["lvl"]
-        elif self._name == 'Ogre':
-            self._damage = m_class[2]["damage"]
-            self._crit = m_class[2]["crit"]
-            self._xp = m_class[2]["xp"] 
-            self._miss_chance = m_class[2]["miss_chance"]
-            self._max_hp = m_class[2]["max_hp"]
-            self._hp = m_class[2]["hp"]
-            self._lvl = m_class[2]["lvl"]
-
+     
     def get_hit(self, damage):
         self._hp -= damage
-
-    def choose_monster(self, name: str):
-        print(f'Выбран монстр {self._name}\n HP: {m_class[name]["hp"]}\n Урон: {m_class[name]["damage"]}')
 
 class Battle:
     def __init__(self, player: Player, monster: Monster):
@@ -219,42 +194,57 @@ class Game:
         print('Выбран игрок\n')
         self.player = Player()
 
-    def choose_class(self):
-        user_choose = input(f'\n1. {pl_classes[0]["name"]} 2.{pl_classes[1]["name"]} 3. {pl_classes[2]["name"]}\n-------------------------\nВведите ваш выбор: ')
-        while True:
-            if user_choose == '1':
-                self.player._game_class = pl_classes[0]["name"]
-                self.player._hp = pl_classes[0]["hp"]
-                self.player._max_hp = pl_classes[0]["max_hp"]
-                self.player._mana = pl_classes[0]["mana"]
-                self.player._max_mana = pl_classes[0]["max_mana"]
-                self.player._crit_chance = pl_classes[0]["crit_chance"]
-                self.player._damage = pl_classes[0]["damage"]
-                self.player._miss_chance = pl_classes[0]["miss_chance"]
-                return
-            elif user_choose == '2':
-                self.player._game_class = pl_classes[1]["name"]
-                self.player._hp = pl_classes[1]["hp"]
-                self.player._max_hp = pl_classes[1]["max_hp"]
-                self.player._mana = pl_classes[1]["mana"]
-                self.player._max_mana = pl_classes[1]["max_mana"]
-                self.player._crit_chance = pl_classes[1]["crit_chance"]
-                self.player._damage = pl_classes[1]["damage"]
-                self.player._miss_chance = pl_classes[1]["miss_chance"]
-                return
-            elif user_choose == '3':
-                self.player._game_class = pl_classes[2]["name"]
-                self.player._hp = pl_classes[2]["hp"]
-                self.player._max_hp = pl_classes[2]["max_hp"]
-                self.player._mana = pl_classes[2]["mana"]
-                self.player._max_mana = pl_classes[2]["max_mana"]
-                self.player._crit_chance = pl_classes[2]["crit_chance"]
-                self.player._damage = pl_classes[2]["damage"]
-                self.player._miss_chance = pl_classes[2]["miss_chance"]
-                return
-            else:
-                print('\nВы ввели не те символы\n')
-            self.waiting()
+    def choose_class(self, name = None):
+        i = 1
+        class_count = []
+        classes = []
+        for class_name in pl_classes:
+            print(f'\n{i}. {class_name}')
+            class_count.append(i)
+            classes.append(class_name)
+            i += 1     
+        user_choose = input('\n-------------------------\nВведите ваш выбор: ')
+        if int(user_choose) in class_count:
+            self.player = Player(self.player._name, classes[int(user_choose) - 1])
+            # print('curr_class: ', pl_classes[classes[int(user_choose) - 1]])
+        else:
+            print('\nВы ввели не те символы\n')
+            return self.choose_class()
+        return self.waiting()
+        # while True:
+        #     if user_choose == '1':
+        #         self.player._game_class = pl_classes[0]["name"]
+        #         self.player._hp = pl_classes[0]["hp"]
+        #         self.player._max_hp = pl_classes[0]["max_hp"]
+        #         self.player._mana = pl_classes[0]["mana"]
+        #         self.player._max_mana = pl_classes[0]["max_mana"]
+        #         self.player._crit_chance = pl_classes[0]["crit_chance"]
+        #         self.player._damage = pl_classes[0]["damage"]
+        #         self.player._miss_chance = pl_classes[0]["miss_chance"]
+        #         return
+        #     elif user_choose == '2':
+        #         self.player._game_class = pl_classes[1]["name"]
+        #         self.player._hp = pl_classes[1]["hp"]
+        #         self.player._max_hp = pl_classes[1]["max_hp"]
+        #         self.player._mana = pl_classes[1]["mana"]
+        #         self.player._max_mana = pl_classes[1]["max_mana"]
+        #         self.player._crit_chance = pl_classes[1]["crit_chance"]
+        #         self.player._damage = pl_classes[1]["damage"]
+        #         self.player._miss_chance = pl_classes[1]["miss_chance"]
+        #         return
+        #     elif user_choose == '3':
+        #         self.player._game_class = pl_classes[2]["name"]
+        #         self.player._hp = pl_classes[2]["hp"]
+        #         self.player._max_hp = pl_classes[2]["max_hp"]
+        #         self.player._mana = pl_classes[2]["mana"]
+        #         self.player._max_mana = pl_classes[2]["max_mana"]
+        #         self.player._crit_chance = pl_classes[2]["crit_chance"]
+        #         self.player._damage = pl_classes[2]["damage"]
+        #         self.player._miss_chance = pl_classes[2]["miss_chance"]
+        #         return
+        #     else:
+        #         
+            # self.waiting()
 
     def _fight(self, monster: Monster):
         print(f'27 Ваше хп сейчас {self.player._hp}')
