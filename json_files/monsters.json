@@ -1,6 +1,6 @@
  {
 
-"Zombie" :{
+"Zombie": {
     "lvl": 1,
     "hp": 100,
     "damage": 15,
@@ -10,23 +10,23 @@
     "xp": 100
 },
 
-"Lich":{
-    "lvl" :          4,
-    "hp"  :          100,
-    "damage" :       5,
-    "miss_chance":   0,
-    "max_hp"     :   100,
-    "crit":          15,
-    "xp":            25
+"Lich": {
+    "lvl": 4,
+    "hp": 100,
+    "damage": 5,
+    "miss_chance": 0,
+    "max_hp": 100,
+    "crit": 15,
+    "xp": 25
     },
 
-"Ogre":{
-"lvl" :          3,
-"hp"  :          250,
-"damage" :       75,
-"miss_chance":   70,
-"max_hp"     :   250,
-"crit":          15,
-"xp":            10
+"Ogre": {
+    "lvl": 3,
+    "hp": 250,
+    "damage": 75,
+    "miss_chance": 70,
+    "max_hp": 250,
+    "crit": 15,
+    "xp": 10
     }
 }

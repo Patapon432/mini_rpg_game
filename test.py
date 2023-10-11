@@ -65,7 +65,8 @@ class Battle:
         self.monster = monster
 
     def fight_status(self):
-        print(f'-------------------------------\nИмя врага - {self.monster._name}\nЗдоровье врага - {self.monster._max_hp}|{self.monster._hp}\nКоличество вашего здоровья - {self.player._max_hp}|{self.player._hp}\nКоличество вашего ресурса - {self.player._max_mana}|{self.player._mana}')
+        print(f'-------------------------------\nИмя врага - {self.monster._name}\nЗдоровье врага - {self.monster._max_hp}|{self.monster._hp}\n'
+              f'Количество вашего здоровья - {self.player._max_hp}|{self.player._hp}\nКоличество вашего ресурса - {self.player._max_mana}|{self.player._mana}')
 
     def fight(self):
         while self.player._hp > 0 and self.monster._hp > 0:
@@ -89,6 +90,7 @@ class Battle:
                 exit()
         print('Вы проиграли')
         exit()
+
     def player_attack(self):
             if self.player._game_class == 'Archer':
                 print('\nВы выпускаете стрелу')
@@ -185,9 +187,10 @@ class Battle:
             self.player.get_hit(self.monster._damage  * 0.75)
 
 class Location:
-    def __init__(self, name, description):
+    def __init__(self, name: str):
         self._name = name
-        self._description = description
+        if name:
+            self._description = locations[name]["description"]
 
 class Game:
     def __init__(self):
@@ -206,48 +209,12 @@ class Game:
         user_choose = input('\n-------------------------\nВведите ваш выбор: ')
         if int(user_choose) in class_count:
             self.player = Player(self.player._name, classes[int(user_choose) - 1])
-            # print('curr_class: ', pl_classes[classes[int(user_choose) - 1]])
         else:
             print('\nВы ввели не те символы\n')
-            return self.choose_class()
+            return self.choose_class(self, name = None)
         return self.waiting()
-        # while True:
-        #     if user_choose == '1':
-        #         self.player._game_class = pl_classes[0]["name"]
-        #         self.player._hp = pl_classes[0]["hp"]
-        #         self.player._max_hp = pl_classes[0]["max_hp"]
-        #         self.player._mana = pl_classes[0]["mana"]
-        #         self.player._max_mana = pl_classes[0]["max_mana"]
-        #         self.player._crit_chance = pl_classes[0]["crit_chance"]
-        #         self.player._damage = pl_classes[0]["damage"]
-        #         self.player._miss_chance = pl_classes[0]["miss_chance"]
-        #         return
-        #     elif user_choose == '2':
-        #         self.player._game_class = pl_classes[1]["name"]
-        #         self.player._hp = pl_classes[1]["hp"]
-        #         self.player._max_hp = pl_classes[1]["max_hp"]
-        #         self.player._mana = pl_classes[1]["mana"]
-        #         self.player._max_mana = pl_classes[1]["max_mana"]
-        #         self.player._crit_chance = pl_classes[1]["crit_chance"]
-        #         self.player._damage = pl_classes[1]["damage"]
-        #         self.player._miss_chance = pl_classes[1]["miss_chance"]
-        #         return
-        #     elif user_choose == '3':
-        #         self.player._game_class = pl_classes[2]["name"]
-        #         self.player._hp = pl_classes[2]["hp"]
-        #         self.player._max_hp = pl_classes[2]["max_hp"]
-        #         self.player._mana = pl_classes[2]["mana"]
-        #         self.player._max_mana = pl_classes[2]["max_mana"]
-        #         self.player._crit_chance = pl_classes[2]["crit_chance"]
-        #         self.player._damage = pl_classes[2]["damage"]
-        #         self.player._miss_chance = pl_classes[2]["miss_chance"]
-        #         return
-        #     else:
-        #         
-            # self.waiting()
-
+    
     def _fight(self, monster: Monster):
-        print(f'27 Ваше хп сейчас {self.player._hp}')
         battle = Battle(self.player, monster)
         battle.fight()
                
@@ -258,24 +225,62 @@ class Game:
         self.waiting()
 
     def travel(self):
+        i = 1
+        locations_count = []
+        locations_list = []
+        for locations_name in locations:
+            print(f'\n{i}. {locations_name}')
+            locations_count.append(i)
+            locations_list.append(locations_name)
+            i += 1     
         while True:
-            user_input = input(f'\n-------------------------\nВведите куда вы хотите отправиться\n1. {locations[0]["name"]}\n2. {locations[1]["name"]}\n3. {locations[2]["name"]}\nВведите ваш выбор: ')
+            user_input = input(f'\n-------------------------\n\n1. {"Dungeon"}\n\n2. {"Dead forrest"}\n\n3. {"Curced_village"}\n\n4. {"Вернуться обратно"}\n\n-------------------------\nВведите куда вы хотите отправиться: ')
             if user_input == '1':
-                location = Location(locations[0]["name"], locations[0]["description"])
+                location = Location("Dungeon")
                 self.dungeon(location) 
+            elif user_input == '2':
+                location = Location("Dead_forrest")
+                self.dungeon(location) 
+            elif user_input == '3':
+                location = Location("Cursed_village")
+                self.dungeon(location) 
+            elif user_input == '4':
+                print('\nВы решили вернуться обратно!')
+                return self.waiting()
             else:
-                print('\nВы нажали не ту кнопку!')  
+                print('\nВы нажали не ту кнопку!')
+        # i = 1
+        # locations_count = []
+        # locations_list = []
+        # for locations_name in locations:
+        #     print(f'\n{i}. {locations_name}')
+        #     locations_count.append(i)
+        #     locations_list.append(locations_name)
+        #     i += 1     
+        # print(locations_count)
+        # user_choose = input('\n-------------------------\nВведите ваш выбор: ')
+        # if int(user_choose) in locations_count:
+        #     location = Location("", locations[int(user_choose) - 1])
+        #     self.dungeon(location)
+        # else:
+        #     print('\nВы ввели не те символы\n')
+        #     return self.travel(self)
+        # return self.waiting(self)
                 
-
     def dungeon(self, location: Location):
-        print(f'{location._name}\n{location._description}')
-        new_monster= Monster('Lich')
+        print(f'\n{location._name}\n{location._description}')
+        if location._name == "Dungeon":
+            new_monster= Monster('Zombie')
+        elif location._name == "Dead_forrest":
+            new_monster= Monster('Lich')
+        else:
+            location._name == "Curced_village"
+            new_monster= Monster('Ogre')    
         user_input = input('\n-------------------------\n1. Идти по подземелью.\n2. Обыскать подземелье.\n3. Вернуться обратно.\nВаш вариант выбора: ')
         if user_input == '1':
-            print(f'На своем пути вы встречаете врага! это {new_monster._name}')
+            print(f'\nНа своем пути вы встречаете врага! это {new_monster._name}\n')
             self._fight(new_monster)
         
-
     def waiting(self):
         user_input = input('\n-------------------------\n1. Открыть инвентарь \n2. Просмотр статуса \n3. Отправиться в путешествие\nВведите ваш выбор: ')
         while True:
@@ -316,8 +321,7 @@ class Game:
                 self.player.status()
                 self.waiting()
             elif user_input == '3':
-                self.travel()
-                
+                self.travel()     
             else:
                 print('\nВы нажали не ту кнопку!')
                 self.waiting()    
