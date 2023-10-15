@@ -1,9 +1,8 @@
 import json
 import random
 
-location_file = open('json_files\locations.json', 'r')
-locations = json.load(location_file)
-
+locations = json.load(open('json_files\locations.json', 'r'))
+ 
 monsters_file = open('json_files/monsters.json', 'r')
 monster = json.load(monsters_file)
 
@@ -11,7 +10,7 @@ pl_class_file = open('json_files\class.json', 'r')
 pl_classes = json.load(pl_class_file)
 
 class Player:
-    def __init__(self, player_name = None, name = None):
+    def __init__(self, player_name:str= None, name:str = None):
 
         self._name = player_name
         if name:
@@ -30,8 +29,12 @@ class Player:
         self._hp -= damage
     
     def status(self):
-        print(f'-------------------------------\n\nВаше имя - {self._name}\nКласс вашего персонажа - {self._game_class}\nКоличество вашего здоровья - {self._max_hp}|{self._hp}\nКоличество вашего ресурса - {self._max_mana}|{self._mana}\nВаш уровень - {self._lvl}\nКоличество вашего опыта - {self._xp}')
-    
+        print(f'-------------------------------\n\nВаше имя - {self._name}\n'
+              f'Класс вашего персонажа - {self._game_class}\nКоличество вашего здоровья - {self._max_hp}|{self._hp}\n'
+              f'Количество вашего ресурса - {self._max_mana}|{self._mana}\n'
+              f'Ваш уровень - {self._lvl}\n'
+              f'Количество вашего опыта - {self._xp}\n')
+
     def xp_up(self, xp):
         self._xp += xp
         if self._xp >= 100:
@@ -45,6 +48,8 @@ class Player:
             print(f'Вы повысили уровень! Теперь ваш уровень составляет {self._lvl}.\nВаши характеристики увеличены!')
             
         self.status()
+
+
 class Monster:
     def __init__(self, name: str):
         self._name = name
@@ -65,7 +70,7 @@ class Battle:
         self.monster = monster
 
     def fight_status(self):
-        print(f'-------------------------------\nИмя врага - {self.monster._name}\nЗдоровье врага - {self.monster._max_hp}|{self.monster._hp}\n'
+        print(f'-------------------------------\n\nИмя врага - {self.monster._name}\nЗдоровье врага - {self.monster._max_hp}|{self.monster._hp}\n'
               f'Количество вашего здоровья - {self.player._max_hp}|{self.player._hp}\nКоличество вашего ресурса - {self.player._max_mana}|{self.player._mana}')
 
     def fight(self):
@@ -87,9 +92,10 @@ class Battle:
         else:
             if self.player._hp > 0:
                 print('Вы победили')
-                exit()
-        print('Вы проиграли')
-        exit()
+                self.player.xp_up(self.monster._exp)
+                return game.waiting()
+            else:
+                return game.endgame()
 
     def player_attack(self):
             if self.player._game_class == 'Archer':
@@ -124,11 +130,11 @@ class Battle:
             self.player._mana -= 25
             if self.player._game_class == 'Archer':
                 self.monster._hp = 0
-                print(f'Вы выпускаете стрелу в голову {self.monster._name}\nВраг повержен!\n')
+                print(f'\nВы выпускаете стрелу в голову {self.monster._name}\nВраг повержен!\n')
             elif self.player._game_class == 'Warrior':
-                print('Своей яростью вы устрашаете врага\nВраг пропускает ход!\n')
+                print('\nСвоей яростью вы устрашаете врага\nВраг пропускает ход!\n')
             elif self.player._game_class == 'Mage':
-                print(f'Вы выпускаете огненный шар!\nВы наносите {self.player._damage * 3} по {self.monster._name}!\n')
+                print(f'\nВы выпускаете огненный шар!\nВы наносите {self.player._damage * 3} по {self.monster._name}!\n')
                 self.monster.get_hit(self.player._damage * 3)
         else:
             print('Вам не хватает маны!\n')
@@ -197,6 +203,14 @@ class Game:
         print('Выбран игрок\n')
         self.player = Player()
 
+    def endgame(self):
+        print('Вы проиграли')
+        user_choice = input('\n1. Начать заново.\n\n2. Закончить игру.\n\n-------------------------\n\nВведите ваш выбор: ')
+        if user_choice == '1':
+            return game.start_game()
+        else:
+            exit()
+
     def choose_class(self, name = None):
         i = 1
         class_count = []
@@ -206,7 +220,7 @@ class Game:
             class_count.append(i)
             classes.append(class_name)
             i += 1     
-        user_choose = input('\n-------------------------\nВведите ваш выбор: ')
+        user_choose = input('\n-------------------------\n\nВведите ваш выбор: ')
         if int(user_choose) in class_count:
             self.player = Player(self.player._name, classes[int(user_choose) - 1])
         else:
@@ -225,16 +239,9 @@ class Game:
         self.waiting()
 
     def travel(self):
-        i = 1
-        locations_count = []
-        locations_list = []
-        for locations_name in locations:
-            print(f'\n{i}. {locations_name}')
-            locations_count.append(i)
-            locations_list.append(locations_name)
-            i += 1     
         while True:
-            user_input = input(f'\n-------------------------\n\n1. {"Dungeon"}\n\n2. {"Dead forrest"}\n\n3. {"Curced_village"}\n\n4. {"Вернуться обратно"}\n\n-------------------------\nВведите куда вы хотите отправиться: ')
+            user_input = input(f'\n-------------------------\n\n1. {"Dungeon"}\n\n2. {"Dead forrest"}\n\n3. {"Curced_village"}\n\n'
+                               f'4. {"Вернуться обратно"}\n\n-------------------------\n\nВведите куда вы хотите отправиться: ')
             if user_input == '1':
                 location = Location("Dungeon")
                 self.dungeon(location) 

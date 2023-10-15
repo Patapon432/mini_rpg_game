@@ -1,5 +1,5 @@
 
-
+import types
 
 
 # class Inventory:
@@ -18,39 +18,59 @@
         
 
 
-# class Item:
-#      def __init__(self, name, value):
-#           self.name = name
-#           self.value = value
+class Item:
+    def __init__(self, name, value):
+          self.__name = name
+          self.__value = value
 
-# class bag:
-#     items = []
+    def get_name(self) -> str:
+        return self.__name
+    
+    def get_value(self) -> int:
+        return self.__value
 
-#     def __init__(self, item: Item = None):
-#         if item:
-#             self.items.append(item)
+    def inscrice_value(self, number: int = 1) -> int:
+        self.__value += number
 
-#     def add_item(self, item: Item):
-#         find_item = None
-#         for i in item.name:
-#             find_item = i
-#             i.value += item.value
-#             return
-         
-#     def use_item(self, item: Item):
-#         new_bag = []
-#         for i in self.items:
-#             if i.name == item.name:
-#                 i.value -= item.value
-#             if i.value > 0:
-#                 new_bag.append(i)
-#         self.items = new_bag
+    def use_item(self, number: int = 1) -> int:
+        if not self.__value: 
+            self.__value -= number
+        
+        return self.__value
 
-#     def open_inventory(self):
-#         return self.items
+class bag:
+    items: list[Item] = []
 
+    def __init__(self, item: Item = None):
+        if item:
+            self.items.append(item)
 
-# healpotion = Item('healpotion', 1)
-# # bag.open_inventory()
+    def add_item(self, item: Item):
+        for i in self.items:
+            if i.get_name() == item.get_name():
+                i.inscrice_value()
+                return True
+        self.items.append(item)
+        return True   
+
+    def use_item(self, item: Item):
+        new_bag: list[Item] = []
+
+        for i in self.items:
+            if i.get_name() == item.get_name:
+                i.use_item()
+            if i.get_value() > 0:
+                new_bag.append(i)
+        self.items = new_bag
+
+    def open_inventory(self):
+        count: int = 1
+        for i in self.items:
+            print(f"Нажмите {count} чтобы использовать {i.get_name()} : {i.get_value()}\n")        
+        print(f"Нажмите {count + 1}")
+
+heal_potion = Item('heal_potion', 1)
+mana_potion = Item('mana_potion', 1)
+bag.open_inventory()
          
     

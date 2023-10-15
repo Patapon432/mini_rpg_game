@@ -7,7 +7,7 @@
     "miss_chance": 30,
     "max_hp":   100,
     "crit": 15,
-    "xp": 100
+    "xp": 25
 },
 
 "Lich": {
@@ -27,6 +27,6 @@
     "miss_chance": 70,
     "max_hp": 250,
     "crit": 15,
-    "xp": 10
+    "xp": 100
     }
 }
