@@ -38,7 +38,7 @@ class Item:
         
         return self.__value
 
-class bag:
+class Bag:
     items: list[Item] = []
 
     def __init__(self, item: Item = None):
@@ -55,9 +55,10 @@ class bag:
 
     def use_item(self, item: Item):
         new_bag: list[Item] = []
+        print(f'Использую {item.get_name()}\n')
 
         for i in self.items:
-            if i.get_name() == item.get_name:
+            if i.get_name() == item.get_name():
                 i.use_item()
             if i.get_value() > 0:
                 new_bag.append(i)
@@ -66,11 +67,18 @@ class bag:
     def open_inventory(self):
         count: int = 1
         for i in self.items:
-            print(f"Нажмите {count} чтобы использовать {i.get_name()} : {i.get_value()}\n")        
-        print(f"Нажмите {count + 1}")
+            print(f"Нажмите {count} чтобы использовать {i.get_name()} : {i.get_value()}\n") 
+            count += 1       
+        # print(f"Нажмите {count + 1}")
 
 heal_potion = Item('heal_potion', 1)
 mana_potion = Item('mana_potion', 1)
+bag = Bag()
+bag.add_item(mana_potion)
+bag.add_item(mana_potion)
 bag.open_inventory()
+bag.use_item(mana_potion)
+bag.open_inventory()
+
          
     
