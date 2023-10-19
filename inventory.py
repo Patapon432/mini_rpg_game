@@ -65,20 +65,24 @@ class Bag:
         self.items = new_bag
 
     def open_inventory(self):
-        count: int = 1
+        items_count: int = 1
         for i in self.items:
-            print(f"Нажмите {count} чтобы использовать {i.get_name()} : {i.get_value()}\n") 
-            count += 1       
+            print(f"Нажмите {items_count} чтобы использовать {i.get_name()} : {i.get_value()}\n") 
+            items_count += 1   
+        user_choose = ('Введите ваш выбор: ')
+        if user_choose in items_count:
+            i.use_item(self.items)
+           
         # print(f"Нажмите {count + 1}")
 
 heal_potion = Item('heal_potion', 1)
 mana_potion = Item('mana_potion', 1)
 bag = Bag()
+bag.add_item(heal_potion)
 bag.add_item(mana_potion)
-bag.add_item(mana_potion)
-bag.open_inventory()
-bag.use_item(mana_potion)
-bag.open_inventory()
+# bag.open_inventory()
+# bag.use_item(mana_potion)
+# bag.open_inventory()
 
          
     
