@@ -4,8 +4,7 @@ import combat_model
 
 locations = json.load(open('json_files\locations.json', 'r'))
 
-pl_class_file = open('json_files\class.json', 'r')
-pl_classes = json.load(pl_class_file)
+pl_classes = json.load(open('json_files\class.json', 'r'))
 
 
 class Location:
